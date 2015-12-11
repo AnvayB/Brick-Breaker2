@@ -1,0 +1,105 @@
+/*
+    A Breakout clone in JavaFX
+    Copyright (C) 2015 Nicholas Narsing <soren121@sorenstudios.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+@font-face {
+    src: url("misterpixel.ttf");
+}
+
+.canvas {
+    -fx-background-color: #000;
+}
+
+.text {
+    -fx-font-family: "VTF MisterPixel";
+    -fx-text-fill: #fff;
+}
+
+#pressStart {
+    -fx-text-fill: #93F772;
+}
+
+#paddle {
+    -fx-fill: #FFDB87;
+}
+
+#ball {
+    -fx-fill: #fff;
+}
+
+#scorePane {
+    -fx-background-color: #000;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #555;
+    -fx-border-style: solid;
+}
+
+#lives, #level {
+    -fx-font-size: 26px;
+}
+
+.interstitial {
+    -fx-font-size: 42px;
+}
+
+.row-0 {
+    -fx-opacity: 0.55;
+}
+
+.row-1 {
+    -fx-opacity: 0.75;
+}
+
+.row-2 {
+    -fx-opacity: 0.9;
+}
+
+.col-0 {
+    -fx-background-color: #d29fe5;
+}
+
+.col-1 {
+    -fx-background-color: #9edbf8;
+}
+
+.col-2 {
+    -fx-background-color: #fdf6ae;
+}
+
+.col-3 {
+    -fx-background-color: #f8b9cf;
+}
+
+.col-4 {
+    -fx-background-color: #edf1f3;
+}
+
+.col-5 {
+    -fx-background-color: #f6b962;
+}
+
+.damage-1, .damage-2 {
+    -fx-background-image: url("damage-sprite.png");
+}
+
+.damage-1 {
+    -fx-background-position: 0 0;
+}
+
+.damage-2 {
+    -fx-background-position: 0 53;
+} 
