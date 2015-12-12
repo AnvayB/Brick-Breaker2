@@ -34,7 +34,7 @@ import javafx.scene.Scene;
  * This class is the controller for the game. All 
  * game-specific functions are in here.
 */
-public class Breakout extends Game {
+public class Breakout extends Engine {
     
     private boolean gameStarted, ballLaunched = false;
     final private int levelCount = 5;
@@ -59,12 +59,8 @@ public class Breakout extends Game {
      * @param stage The primary Stage of the JavaFX application.
      * @param rootNode The root node of the FXML document.
      */
-    public Breakout(Stage stage, Parent rootNode) {
-        super(stage, "Breakout!", 60, 640, 600);
-        
-        // Required to initialize FXML early
-        Scene scene = getScene();
-        scene.setRoot(rootNode);
+    public Breakout(Stage stage, Scene scene) {
+        super(stage, scene, "Breakout!", 60);
         
         // Lookup game nodes
         groups = new Group[5];
@@ -97,18 +93,16 @@ public class Breakout extends Game {
     }
 
     @Override
-    public void update(Game game, GameTime gameTime) {
+    public void update(Engine game) {
         if(gameStarted) {
-            KeyManager km = game.getKeyManager();
-            
             // Animate paddle
             Boolean moved;
-            if(km.isKeyPressed(KeyCode.LEFT)) {
+            if(game.getKeyPressed() == KeyCode.LEFT) {
                 moved = paddle.animate(-paddleSpeed);
                 // Move ball in sync with paddle if it hasn't been launched yet
                 if(!ballLaunched && moved) ball.setTranslateX(ball.getTranslateX() - paddleSpeed);
             }
-            if(km.isKeyPressed(KeyCode.RIGHT)) {
+            if(game.getKeyPressed() == KeyCode.RIGHT) {
                 moved = paddle.animate(paddleSpeed);
                 if(!ballLaunched && moved) ball.setTranslateX(ball.getTranslateX() + paddleSpeed);
             }

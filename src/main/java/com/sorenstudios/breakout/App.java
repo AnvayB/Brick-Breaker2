@@ -37,10 +37,10 @@ public class App extends Application {
             System.out.println(e);
             System.exit(1);
         }
-    
-        Game game = new Breakout(primaryStage, root);
+
+        Scene scene = new Scene(root, 640, 600);
+        Engine game = new Breakout(primaryStage, scene);
         primaryStage.setTitle(game.getTitle());
-        primaryStage.setScene(game.getScene());
         primaryStage.setResizable(false);
         
         primaryStage.show();
