@@ -71,8 +71,8 @@ public class Ball {
      */
     public void setStartingSpeed(double speed) {
         // Randomize initial starting angle
-        dx = (new Random()).nextBoolean() ? speed : -speed;
-        dy = -speed;
+        this.dx = (new Random()).nextBoolean() ? speed : -speed;
+        this.dy = -speed;
     }
     
     /**
@@ -81,7 +81,7 @@ public class Ball {
      * @param newListener A LevelListener object to attach.
      */
     public void addLossListener(LevelListener newListener) {
-        lossListeners.add(newListener);
+        this.lossListeners.add(newListener);
     }
     
     /**
@@ -89,18 +89,18 @@ public class Ball {
      */
     public void animate() {
         // Move the ball
-        ball.setTranslateX(ball.getTranslateX() + dx);
-        ball.setTranslateY(ball.getTranslateY() + dy);
+        this.ball.setTranslateX(this.ball.getTranslateX() + dx);
+        this.ball.setTranslateY(this.ball.getTranslateY() + dy);
         
-        Bounds bounds = ball.getBoundsInParent();
-        Pane canvas = (Pane)ball.getParent();
+        Bounds bounds = this.ball.getBoundsInParent();
+        Pane canvas = (Pane)this.ball.getParent();
         final boolean atTopBorder = bounds.getMinY() <= 0;
         final boolean atRightBorder = bounds.getMaxX() >= canvas.getWidth();
         final boolean atBottomBorder = bounds.getMaxY() >= canvas.getHeight();
         final boolean atLeftBorder = bounds.getMinX() <= 0;
         
-        final int atBrick = bricks.checkCollision(ball);
-        final int atPaddle = paddle.checkCollision(ball);
+        final int atBrick = this.bricks.checkCollision(this.ball);
+        final int atPaddle = this.paddle.checkCollision(this.ball);
         
         // Calculate angle of reflection (bounce the ball off things)
         if(atLeftBorder || atRightBorder || atBrick == -1) dx *= -1;
@@ -109,7 +109,7 @@ public class Ball {
         // If the ball hits the bottom of the screen, the player loses a life
         // Notify any attached loss listeners
         if(atBottomBorder) {
-            for(LevelListener ls : lossListeners) {
+            for(LevelListener ls : this.lossListeners) {
                 ls.handleLevelingEvent();
             }
         }

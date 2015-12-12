@@ -47,8 +47,8 @@ public class Bricks {
      */
     public Bricks(GridPane bricks) {
         this.bricks = bricks;
-        brickList = bricks.getChildren();
-        damage = new int[4][6];
+        this.brickList = bricks.getChildren();
+        this.damage = new int[4][6];
     }
     
     /**
@@ -57,7 +57,7 @@ public class Bricks {
      * @param newListener A LevelListener object to attach.
      */
     public void addWinListener(LevelListener newListener) {
-        winListeners.add(newListener);
+        this.winListeners.add(newListener);
     }
     
     /**
@@ -73,14 +73,14 @@ public class Bricks {
         final double ballMaxX = ballBounds.getMaxX();
         final double ballMaxY = ballBounds.getMaxY();
         
-        final boolean atBricksTop = ballMinY >= bricks.getLayoutY() - ball.getRadius() * 2;
-        final boolean atBricksBottom = ballMaxY <= (bricks.getLayoutY() + bricks.getHeight()) + ball.getRadius() * 2;
+        final boolean atBricksTop = ballMinY >= this.bricks.getLayoutY() - ball.getRadius() * 2;
+        final boolean atBricksBottom = ballMaxY <= (this.bricks.getLayoutY() + this.bricks.getHeight()) + ball.getRadius() * 2;
         
         // Only check for collisions if the ball is near the brick field
         if (atBricksTop && atBricksBottom) {
             // Check in reverse from bottom to top for speed
-            for(int i = brickList.size() - 1; i >= 0; i--) {
-                Region brick = (Region)brickList.get(i);
+            for(int i = this.brickList.size() - 1; i >= 0; i--) {
+                Region brick = (Region)this.brickList.get(i);
                 // Skip already broken bricks
                 if(!brick.isVisible()) {
                     continue;
@@ -88,8 +88,8 @@ public class Bricks {
                 
                 // Precalculate bounds
                 Bounds brickBounds = brick.getBoundsInParent();
-                final double brickMinX = bricks.getLayoutX() + brickBounds.getMinX();
-                final double brickMinY = bricks.getLayoutY() + brickBounds.getMinY();
+                final double brickMinX = this.bricks.getLayoutX() + brickBounds.getMinX();
+                final double brickMinY = this.bricks.getLayoutY() + brickBounds.getMinY();
                 final double brickMaxX = brickMinX + brickBounds.getWidth();
                 final double brickMaxY = brickMinY + brickBounds.getHeight();
                 
@@ -129,11 +129,11 @@ public class Bricks {
         int row = Integer.valueOf(styles.get(0).substring(4));
         int col = Integer.valueOf(styles.get(1).substring(4));
         
-        damage[row][col]++;
+        this.damage[row][col]++;
         // Damage of 3 indicates a broken brick
-        if(damage[row][col] == 3) {
+        if(this.damage[row][col] == 3) {
             brick.setVisible(false);
-            bricksCleared++;
+            this.bricksCleared++;
             
             if(isCleared()) {
                 // Notify any attached listeners of a win
@@ -144,8 +144,8 @@ public class Bricks {
         }
         
         // Remove all damage styles and add the new one
-        styles.removeAll(damageStyles);
-        styles.add("damage-" + damage[row][col]);
+        styles.removeAll(this.damageStyles);
+        styles.add("damage-" + this.damage[row][col]);
         
         // Debug
         System.out.println(Arrays.toString(styles.toArray()));
@@ -158,20 +158,20 @@ public class Bricks {
      */
     public boolean isCleared() {
         System.out.println(bricksCleared + " bricks cleared");
-        return bricksCleared == brickList.size();
+        return this.bricksCleared == this.brickList.size();
     }
     
     /**
      * Resets the brick field and removes all damage.
      */
     public void reset() {
-        for(Node brick : brickList) {
+        for(Node brick : this.brickList) {
             brick.setVisible(true);
-            brick.getStyleClass().removeAll(damageStyles);
+            brick.getStyleClass().removeAll(this.damageStyles);
         }
         
-        damage = new int[4][6];
-        bricksCleared = 0;
+        this.damage = new int[4][6];
+        this.bricksCleared = 0;
     }
     
 }

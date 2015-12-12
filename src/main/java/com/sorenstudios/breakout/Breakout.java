@@ -63,53 +63,53 @@ public class Breakout extends Engine {
         super(stage, scene, "Breakout!", 60);
         
         // Lookup game nodes
-        groups = new Group[5];
-        groups[0] = (Group)scene.lookup("#titleGroup");
-        groups[1] = (Group)scene.lookup("#gameGroup");
-        groups[2] = (Group)scene.lookup("#levelInterstitial");
-        groups[3] = (Group)scene.lookup("#winInterstitial");
-        groups[4] = (Group)scene.lookup("#lostInterstitial");
+        this.groups = new Group[5];
+        this.groups[0] = (Group)scene.lookup("#titleGroup");
+        this.groups[1] = (Group)scene.lookup("#gameGroup");
+        this.groups[2] = (Group)scene.lookup("#levelInterstitial");
+        this.groups[3] = (Group)scene.lookup("#winInterstitial");
+        this.groups[4] = (Group)scene.lookup("#lostInterstitial");
         
-        levelInd = (Label)scene.lookup("#level");
-        livesInd = (Label)scene.lookup("#lives");
-        levelIndIn = (Label)scene.lookup("#levelIn");
-        livesIndIn = (Label)scene.lookup("#livesIn");
+        this.levelInd = (Label)scene.lookup("#level");
+        this.livesInd = (Label)scene.lookup("#lives");
+        this.levelIndIn = (Label)scene.lookup("#levelIn");
+        this.livesIndIn = (Label)scene.lookup("#livesIn");
         
-        bricks = new Bricks((GridPane)scene.lookup("#bricks"));
-        paddle = new Paddle((Rectangle)scene.lookup("#paddle"));
-        ball = new Ball((Circle)scene.lookup("#ball"), bricks, paddle);
+        this.bricks = new Bricks((GridPane)scene.lookup("#bricks"));
+        this.paddle = new Paddle((Rectangle)scene.lookup("#paddle"));
+        this.ball = new Ball((Circle)scene.lookup("#ball"), this.bricks, this.paddle);
         
         // Add win/loss listeners
-        bricks.addWinListener(() -> levelUp());
-        ball.addLossListener(() -> loseLife());
+        this.bricks.addWinListener(() -> levelUp());
+        this.ball.addLossListener(() -> loseLife());
         
         // Handle non-constant controls
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this::toggleGameState);
         
         // Play title screen music
-        bgm = new BackgroundMusic();
-        bgm.setMusic(0);
-        bgm.play();
+        this.bgm = new BackgroundMusic();
+        this.bgm.setMusic(0);
+        this.bgm.play();
     }
 
     @Override
     public void update(Engine game) {
-        if(gameStarted) {
+        if(this.gameStarted) {
             // Animate paddle
             Boolean moved;
             if(game.getKeyPressed() == KeyCode.LEFT) {
-                moved = paddle.animate(-paddleSpeed);
+                moved = this.paddle.animate(-paddleSpeed);
                 // Move ball in sync with paddle if it hasn't been launched yet
-                if(!ballLaunched && moved) ball.setTranslateX(ball.getTranslateX() - paddleSpeed);
+                if(!this.ballLaunched && moved) this.ball.setTranslateX(this.ball.getTranslateX() - paddleSpeed);
             }
             if(game.getKeyPressed() == KeyCode.RIGHT) {
-                moved = paddle.animate(paddleSpeed);
-                if(!ballLaunched && moved) ball.setTranslateX(ball.getTranslateX() + paddleSpeed);
+                moved = this.paddle.animate(paddleSpeed);
+                if(!this.ballLaunched && moved) this.ball.setTranslateX(this.ball.getTranslateX() + paddleSpeed);
             }
             
             // Animate ball if it's been launched
-            if(ballLaunched) {
-                ball.animate();
+            if(this.ballLaunched) {
+                this.ball.animate();
             }
         }
     }
@@ -120,10 +120,10 @@ public class Breakout extends Engine {
      * @param num The new number of lives remaining.
      */
     private void setLives(int num) {
-        livesRemaining = num;
+        this.livesRemaining = num;
         // Update info bar & interstitial screen
-        livesInd.setText("" + livesRemaining);
-        livesIndIn.setText("x " + livesRemaining);
+        this.livesInd.setText("" + this.livesRemaining);
+        this.livesIndIn.setText("x " + this.livesRemaining);
     }
     
     /** 
@@ -132,10 +132,10 @@ public class Breakout extends Engine {
      * @param The new level.
      */
     private void setLevel(int num) {
-        level = num;
+        this.level = num;
         // Update info bar & interstitial screen
-        levelInd.setText("Level " + level);
-        levelIndIn.setText("Level " + level);
+        this.levelInd.setText("Level " + this.level);
+        this.levelIndIn.setText("Level " + this.level);
     }
     
     /**
@@ -145,13 +145,13 @@ public class Breakout extends Engine {
      * @param newGroup The group to make visible.
      */
     private void switchToGroup(int newGroup) {
-        if(newGroup < groups.length && newGroup >= 0 && !isGroupVisible(newGroup)) {
-            for(int i = 0; i < groups.length; i++) {
+        if(newGroup < this.groups.length && newGroup >= 0 && !isGroupVisible(newGroup)) {
+            for(int i = 0; i < this.groups.length; i++) {
                 if(i == newGroup) {
-                    groups[i].setVisible(true);
+                    this.groups[i].setVisible(true);
                 }
                 else {
-                    groups[i].setVisible(false);
+                    this.groups[i].setVisible(false);
                 }
             }
         }
@@ -164,8 +164,8 @@ public class Breakout extends Engine {
      * @return True if the group exists, false if it doesn't.
      */
     private boolean isGroupVisible(int i) {
-        if(i < groups.length && i >= 0) {
-            return groups[i].isVisible();
+        if(i < this.groups.length && i >= 0) {
+            return this.groups[i].isVisible();
         }
         else {
             return false;
@@ -205,12 +205,12 @@ public class Breakout extends Engine {
      */
     private void resetPlayer(double startingSpeed) {
         // Stop the ball's animation
-        ballLaunched = false;
+        this.ballLaunched = false;
         
-        paddle.setTranslateX(0);
-        ball.setStartingSpeed(startingSpeed);
-        ball.setTranslateX(0);
-        ball.setTranslateY(0);
+        this.paddle.setTranslateX(0);
+        this.ball.setStartingSpeed(startingSpeed);
+        this.ball.setTranslateX(0);
+        this.ball.setTranslateY(0);
     }
     
     /**
@@ -219,7 +219,7 @@ public class Breakout extends Engine {
      * @param startingSpeed The starting speed of the ball.
      */    
     private void resetLevel(double startingSpeed) {
-        bricks.reset();
+        this.bricks.reset();
         resetPlayer(startingSpeed);
     }
     
@@ -231,8 +231,8 @@ public class Breakout extends Engine {
         showInterstitial(2, 1);
         
         // Stop title music and start game
-        bgm.stop();
-        gameStarted = true;
+        this.bgm.stop();
+        this.gameStarted = true;
     }
     
     /**
@@ -240,18 +240,18 @@ public class Breakout extends Engine {
      */
     private void stopGame() {
         // Stop game if one is in progress
-        if(gameStarted) {
-            gameStarted = false;
+        if(this.gameStarted) {
+            this.gameStarted = false;
             
             // Start title music
             // Special music is played after winning the game
-            if(level == levelCount + 1) {
-                bgm.setMusic(1);
+            if(this.level == this.levelCount + 1) {
+                this.bgm.setMusic(1);
             }
             else {
-                bgm.setMusic(0);
+                this.bgm.setMusic(0);
             }
-            bgm.play();
+            this.bgm.play();
             
             // Only show title screen here if the game was quit manually
             // levelUp and loseLife show interstitials on their own
@@ -260,8 +260,8 @@ public class Breakout extends Engine {
             }
             
             // Reset game canvas
-            resetLevel(initialSpeed);
-            setLives(maxLives);
+            resetLevel(this.initialSpeed);
+            setLives(this.maxLives);
             setLevel(1);
         }
         // Quit otherwise
@@ -274,11 +274,11 @@ public class Breakout extends Engine {
      * Increases the player's level by one.
      */
     private void levelUp() {
-        if(gameStarted) {
-            setLevel(level + 1);
+        if(this.gameStarted) {
+            setLevel(this.level + 1);
             
             // If the last level was won, show the victory screen
-            if(level == levelCount + 1) {
+            if(this.level == this.levelCount + 1) {
                 showInterstitial(3, 0);
                 stopGame();
             }
@@ -287,15 +287,15 @@ public class Breakout extends Engine {
                 showInterstitial(2, 1);
                 
                 // On the last level, play special music
-                if(level == levelCount) {
-                    bgm.setMusic(2);
-                    bgm.play();
+                if(this.level == this.levelCount) {
+                    this.bgm.setMusic(2);
+                    this.bgm.play();
                 }
                 else {
-                    bgm.stop();
+                    this.bgm.stop();
                 }
                 
-                resetLevel(level + 3);
+                resetLevel(this.level + 3);
             }
         }
         else {
@@ -307,13 +307,13 @@ public class Breakout extends Engine {
      * Decrements the player's level by one.
      */
     private void loseLife() {
-        if(gameStarted) {
-            setLives(livesRemaining - 1);
+        if(this.gameStarted) {
+            setLives(this.livesRemaining - 1);
 
             // If player has lives left, show the level interstitial
-            if(livesRemaining > 0) {
+            if(this.livesRemaining > 0) {
                 showInterstitial(2, 1);
-                resetPlayer(level + 3);
+                resetPlayer(this.level + 3);
             }
             // Oh no! Show the game over screen
             else {
@@ -339,13 +339,13 @@ public class Breakout extends Engine {
             case SPACE:
                 // Start game
                 // Do not allow startGame if the victory screen is shown
-                if(!gameStarted && !isGroupVisible(3)) {
+                if(!this.gameStarted && !isGroupVisible(3)) {
                     startGame();
                 }
                 // Launch ball
                 // Do not allow if the level interstitial is shown
-                else if(gameStarted && !ballLaunched && !isGroupVisible(2)) {
-                    ballLaunched = true;
+                else if(this.gameStarted && !this.ballLaunched && !isGroupVisible(2)) {
+                    this.ballLaunched = true;
                 }
                 break;
             case ESCAPE:
@@ -365,11 +365,11 @@ public class Breakout extends Engine {
             case NUMPAD4:
             case NUMPAD5:
                 // Allow cheat codes on title screen
-                if(!gameStarted) startGame();
+                if(!this.gameStarted) startGame();
                 // Set to level - 1 because levelUp will increment
-                level = Integer.valueOf(e.getText()) - 1;
+                this.level = Integer.valueOf(e.getText()) - 1;
                 // Set max lives
-                setLives(maxLives);
+                setLives(this.maxLives);
                 levelUp();
         }
     }

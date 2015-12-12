@@ -25,9 +25,13 @@ import javafx.scene.Scene;
 import javafx.scene.Parent;
 
 public class App extends Application {
+    
+    private Stage stage;
+    private Engine game;
 
     @Override
-    public void start(Stage primaryStage) throws Exception { 
+    public void start(Stage primaryStage) throws Exception {
+        this.stage = primaryStage;
         Parent root = null;
     
         try {
@@ -39,12 +43,19 @@ public class App extends Application {
         }
 
         Scene scene = new Scene(root, 640, 600);
-        Engine game = new Breakout(primaryStage, scene);
+        this.game = new Breakout(primaryStage, scene);
         primaryStage.setTitle(game.getTitle());
         primaryStage.setResizable(false);
         
         primaryStage.show();
         game.run();
+    }
+    
+    @Override
+    public void stop() throws Exception {
+        this.game.stop();
+        this.stage.close();
+        System.exit(0);
     }
     
     public static void main(String[] args) {

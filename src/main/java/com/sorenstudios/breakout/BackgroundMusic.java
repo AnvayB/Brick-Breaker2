@@ -28,6 +28,7 @@ import javafx.scene.media.MediaException;
 public class BackgroundMusic {
     
     private MediaPlayer player;
+    private boolean playbackAllowed = true;
     
     private String[] slots = {
         "UnderOurSpell.mp3",
@@ -42,36 +43,40 @@ public class BackgroundMusic {
      * @param selection The BGM slot to play.
      */
     public void setMusic(int selection) {
-        // Stop music before setting a new track
-        if(player != null) stop();
-        
-        if(selection < slots.length && selection >= 0) {
-            String path = "";
-            try {
-                path = getClass().getResource("/music/" + slots[selection]).toURI().toString();
-            }
-            catch(java.net.URISyntaxException ex) {
-                System.out.println("Specified music does not exist.");
-                return;
-            }
+        if(this.playbackAllowed) {
+            // Stop music before setting a new track
+            stop();
             
-            // Dispose of old player if one exists
-            if(player != null) player.dispose();
-            
-            // Initialize new player
-            // (MediaPlayer objects are immutable once created)
-            try {
-                player = new MediaPlayer(new Media(path));
-                // Loop infinitely
-                player.setCycleCount(-1);
+            if(selection < this.slots.length && selection >= 0) {
+                String path = "";
+                try {
+                    path = getClass().getResource("/music/" + this.slots[selection]).toURI().toString();
+                }
+                catch(java.net.URISyntaxException ex) {
+                    System.out.println("Specified music does not exist.");
+                    return;
+                }
+                
+                // Dispose of old this.player if one exists
+                if(this.player != null) this.player.dispose();
+                
+                // Initialize new this.player
+                // (MediaPlayer objects are immutable once created)
+                try {
+                    this.player = new MediaPlayer(new Media(path));
+                    // Loop infinitely
+                    this.player.setCycleCount(-1);
+                }
+                catch(MediaException ex) {
+                    // Disable audio playback where it's unsupported
+                    System.out.println("Your environment does not support audio playback. Music in this game has been disabled.");
+                    this.playbackAllowed = false;
+                }
+                
             }
-            catch(MediaException ex) {
-                System.out.println("Your environment does not support audio playback. Music in this game has been disabled.");
+            else {
+                System.out.println("BGM slot does not exist");
             }
-            
-        }
-        else {
-            System.out.println("BGM slot does not exist");
         }
     }
     
@@ -79,14 +84,14 @@ public class BackgroundMusic {
      * Plays the set background music, but only if setMusic() was called beforehand.
      */
     public void play() {
-        if(player != null) player.play();
+        if(this.player != null) this.player.play();
     }
 
     /**
      * Stops the set background music, but only if setMusic() was called beforehand.
      */    
     public void stop() {
-        if(player != null) player.stop();
+        if(this.player != null) this.player.stop();
     }
 
     /**
@@ -95,8 +100,8 @@ public class BackgroundMusic {
      * @return True if there is music playing, false if there isn't.
      */    
     public boolean isPlaying() {
-        if(player != null) {
-            return player.getStatus() == MediaPlayer.Status.PLAYING;
+        if(this.player != null) {
+            return this.player.getStatus() == MediaPlayer.Status.PLAYING;
         }
         else {
             return false;
