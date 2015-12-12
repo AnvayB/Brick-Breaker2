@@ -23,7 +23,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;
 import javafx.scene.layout.GridPane;
@@ -266,7 +265,8 @@ public class Breakout extends Engine {
         }
         // Quit otherwise
         else {
-            javafx.application.Platform.exit();
+            stop();
+            this.stage.close();
         }
     }
     
