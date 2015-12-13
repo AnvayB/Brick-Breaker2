@@ -10,9 +10,15 @@ This project requires that you have Java 8 and [Maven](https://maven.apache.org/
 
 #### To compile to a JAR file and run it:
 
-    $ mvn jfx:jar
+    $ mvn package
     $ java -jar target/jfx/app/breakout-{VERSION}-jfx.jar
 
 #### To compile + run it immediately (useful for development):
 
     $ mvn jfx:run
+
+#### To build a native distributable/bundle:
+
+    $ mvn jfx:native
+    
+ * Note that this will only build a native bundle for the platform you're executing on. E.g. if you want a Windows bundle, you'll have to build on Windows.

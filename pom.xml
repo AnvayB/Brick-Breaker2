@@ -28,7 +28,19 @@
                 <version>8.2.0</version>
                 <configuration>
                     <mainClass>com.sorenstudios.breakout.App</mainClass>
+                    <updateExistingJar>true</updateExistingJar>
+                    <vendor>sorenstudios</vendor>
+                    <appName>Breakout-JavaFX</appName>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>create-jfxjar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>build-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
