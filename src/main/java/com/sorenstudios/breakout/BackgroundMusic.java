@@ -21,6 +21,7 @@ package com.sorenstudios.breakout;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaException;
+import java.net.URISyntaxException;
 
 /**
  * Used for playing pre-set background music.
@@ -52,7 +53,7 @@ public class BackgroundMusic {
                 try {
                     path = getClass().getResource("/music/" + this.slots[selection]).toURI().toString();
                 }
-                catch(java.net.URISyntaxException ex) {
+                catch(URISyntaxException | NullPointerException ex) {
                     System.out.println("Specified music does not exist.");
                     return;
                 }
