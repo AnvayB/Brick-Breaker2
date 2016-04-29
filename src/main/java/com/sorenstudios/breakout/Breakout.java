@@ -79,8 +79,8 @@ public class Breakout extends Engine {
         this.ball = new Ball((Circle)scene.lookup("#ball"), this.bricks, this.paddle);
         
         // Add win/loss listeners
-        this.bricks.addWinListener(() -> levelUp());
-        this.ball.addLossListener(() -> loseLife());
+        this.bricks.addWinListener(this::levelUp);
+        this.ball.addLossListener(this::loseLife);
         
         // Handle non-constant controls
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this::toggleGameState);
@@ -146,12 +146,8 @@ public class Breakout extends Engine {
     private void switchToGroup(int newGroup) {
         if(newGroup < this.groups.length && newGroup >= 0 && !isGroupVisible(newGroup)) {
             for(int i = 0; i < this.groups.length; i++) {
-                if(i == newGroup) {
-                    this.groups[i].setVisible(true);
-                }
-                else {
-                    this.groups[i].setVisible(false);
-                }
+                // When looping over groups, only make the new group visible
+                this.groups[i].setVisible(i == newGroup);
             }
         }
     }
