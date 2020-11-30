@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.sorenstudios.breakout;
+package application;
 
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Circle;

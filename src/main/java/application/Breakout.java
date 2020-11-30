@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.sorenstudios.breakout;
+package application;
 
 import javafx.concurrent.Task;
 import javafx.scene.input.KeyCode;
@@ -350,23 +350,23 @@ public class Breakout extends Engine {
                     stopGame();
                 }
                 break;
-            case DIGIT1:
-            case DIGIT2:
-            case DIGIT3:
-            case DIGIT4:
-            case DIGIT5:
-            case NUMPAD1:
-            case NUMPAD2:
-            case NUMPAD3:
-            case NUMPAD4:
-            case NUMPAD5:
-                // Allow cheat codes on title screen
-                if(!this.gameStarted) startGame();
-                // Set to level - 1 because levelUp will increment
-                this.level = Integer.valueOf(e.getText()) - 1;
-                // Set max lives
-                setLives(this.maxLives);
-                levelUp();
+//            case DIGIT1:
+//            case DIGIT2:
+//            case DIGIT3:
+//            case DIGIT4:
+//            case DIGIT5:
+//            case NUMPAD1:
+//            case NUMPAD2:
+//            case NUMPAD3:
+//            case NUMPAD4:
+//            case NUMPAD5:
+//                // Allow cheat codes on title screen
+//                if(!this.gameStarted) startGame();
+//                // Set to level - 1 because levelUp will increment
+//                this.level = Integer.valueOf(e.getText()) - 1;
+//                // Set max lives
+//                setLives(this.maxLives);
+//                levelUp();
         }
     }
 

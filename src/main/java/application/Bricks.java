@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package com.sorenstudios.breakout;
+package application;
 
 import java.util.Arrays;
 import java.util.List;
