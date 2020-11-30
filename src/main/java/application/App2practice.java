@@ -56,7 +56,7 @@ public class App2practice extends Application {
         Engine game = new Breakout(primaryStage, scene);
         primaryStage.setTitle(game.getTitle());
         primaryStage.setResizable(false);
-        
+         
         primaryStage.show();
         game.run();
         	 }
