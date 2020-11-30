@@ -1,24 +1,6 @@
-/*
-    A Breakout clone in JavaFX
-    Copyright (C) 2015 Nicholas Narsing <soren121@sorenstudios.com>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 package application;
 
-import application.Tutorial2;
+import application.Tutorial;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,7 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.Parent;
 
-public class App3 extends Application {
+public class Main extends Application {
 
 	Stage window;
 	Button play, tutorial, rankings, closeButton;
@@ -89,7 +71,7 @@ public class App3 extends Application {
 		tutorial.relocate(355, 500);
 
 		tutorial.setOnAction(e -> {
-			Tutorial2.display("Tutorial", "Welcome to Brick-Breaker!" + "\n" + "\nHere’s how to play the game:" + "\n"
+			Tutorial.display("Tutorial", "Welcome to Brick-Breaker!" + "\n" + "\nHere’s how to play the game:" + "\n"
 					+ "\nYour goal is to knock out all the bricks on the screen by moving the paddle. "
 					+ "\n\nLaunch the ball by pressing the SPACE bar."
 					+ "\nControl the paddle using the LEFT and RIGHT arrow keys on your keyboard." + "\n"

@@ -18,7 +18,7 @@ import java.util.*;
  * A Tutorial class that manages the tutorial page
  *
  */
-public class Tutorial2 {
+public class Tutorial {
 
 	/**
 	 * Display the tutorial page
