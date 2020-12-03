@@ -33,7 +33,6 @@ public class Breakout extends Engine {
     private Paddle paddle;
     private Ball ball;
     
-    private BackgroundMusic bgm;
     
     /**
      * Creates a new Breakout game.
@@ -68,10 +67,6 @@ public class Breakout extends Engine {
         // Handle non-constant controls
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this::toggleGameState);
         
-        // Play title screen music
-        this.bgm = new BackgroundMusic();
-        this.bgm.setMusic(0);
-        this.bgm.play();
     }
 
     @Override
@@ -208,8 +203,7 @@ public class Breakout extends Engine {
         // Show level interstitial first
         showInterstitial(2, 1);
         
-        // Stop title music and start game
-        this.bgm.stop();
+        //start game
         this.gameStarted = true;
     }
     
@@ -221,15 +215,6 @@ public class Breakout extends Engine {
         if(this.gameStarted) {
             this.gameStarted = false;
             
-            // Start title music
-            // Special music is played after winning the game
-            if(this.level == this.levelCount + 1) {
-                this.bgm.setMusic(1);
-            }
-            else {
-                this.bgm.setMusic(0);
-            }
-            this.bgm.play();
             
             // Only show title screen here if the game was quit manually
             // levelUp and loseLife show interstitials on their own
@@ -264,16 +249,6 @@ public class Breakout extends Engine {
             else {
                 // Show the level interstitial
                 showInterstitial(2, 1);
-                
-                // On the last level, play special music
-                if(this.level == this.levelCount) {
-                    this.bgm.setMusic(2);
-                    this.bgm.play();
-                }
-                else {
-                    this.bgm.stop();
-                }
-                
                 resetLevel(this.level + 3);
             }
         }
@@ -333,23 +308,7 @@ public class Breakout extends Engine {
                     stopGame();
                 }
                 break;
-//            case DIGIT1:
-//            case DIGIT2:
-//            case DIGIT3:
-//            case DIGIT4:
-//            case DIGIT5:
-//            case NUMPAD1:
-//            case NUMPAD2:
-//            case NUMPAD3:
-//            case NUMPAD4:
-//            case NUMPAD5:
-//                // Allow cheat codes on title screen
-//                if(!this.gameStarted) startGame();
-//                // Set to level - 1 because levelUp will increment
-//                this.level = Integer.valueOf(e.getText()) - 1;
-//                // Set max lives
-//                setLives(this.maxLives);
-//                levelUp();
+
         }
     }
 
