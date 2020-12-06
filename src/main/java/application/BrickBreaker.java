@@ -16,7 +16,7 @@ import javafx.scene.Scene;
  * This class is the controller for the game. All 
  * game-specific functions are in here.
 */
-public class Breakout extends Engine {
+public class BrickBreaker extends Game {
     
     private boolean gameStarted, ballLaunched = false;
     final private int levelCount = 5;
@@ -40,8 +40,8 @@ public class Breakout extends Engine {
      * @param stage The primary Stage of the JavaFX application.
      * @param rootNode The root node of the FXML document.
      */
-    public Breakout(Stage stage, Scene scene) {
-        super(stage, scene, "Breakout!", 60);
+    public BrickBreaker(Stage stage, Scene scene) {
+        super(stage, scene, "Brick-Breaker", 60);
         
         // Lookup game nodes
         this.groups = new Group[5];
@@ -70,7 +70,7 @@ public class Breakout extends Engine {
     }
 
     @Override
-    public void update(Engine game) {
+    public void update(Game game) {
         if(this.gameStarted) {
             // Animate paddle
             Boolean moved;
