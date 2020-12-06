@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public abstract class Engine {
+public abstract class Game {
 
     protected final Stage stage;
     private final Timeline loop;
@@ -19,7 +19,7 @@ public abstract class Engine {
     private Instant actualFrameTime = Instant.now();
     private KeyCode lastKey;
     
-    public Engine(Stage stage, Scene scene, String title, int fps) {
+    public Game(Stage stage, Scene scene, String title, int fps) {
         this.stage = stage;
         this.title = title;
         
@@ -64,6 +64,6 @@ public abstract class Engine {
         return this.title;
     }
     
-    public abstract void update(Engine gameObj);
+    public abstract void update(Game gameObj);
   
 }
