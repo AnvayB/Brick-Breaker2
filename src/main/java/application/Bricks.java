@@ -21,7 +21,7 @@ public class Bricks {
     private int bricksCleared;
     
     private final List<String> damageStyles = Arrays.asList("damage-1", "damage-2", "damage-3");
-    private List<LevelListener> winListeners = new ArrayList<LevelListener>();
+    private List<Levels> winListeners = new ArrayList<Levels>();
 
     /**
      * Creates a Bricks handler object.
@@ -39,7 +39,7 @@ public class Bricks {
      *
      * @param newListener A LevelListener object to attach.
      */
-    public void addWinListener(LevelListener newListener) {
+    public void addWinListener(Levels newListener) {
         this.winListeners.add(newListener);
     }
     
@@ -120,7 +120,7 @@ public class Bricks {
             
             if(isCleared()) {
                 // Notify any attached listeners of a win
-                for(LevelListener ls : winListeners) {
+                for(Levels ls : winListeners) {
                     ls.handleLevelingEvent();
                 }
             }

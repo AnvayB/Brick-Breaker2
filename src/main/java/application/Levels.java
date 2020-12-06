@@ -6,7 +6,7 @@ package application;
  *
  * See Ball.addLossListener and Bricks.addWinListener for more details.
  */
-public interface LevelListener {
+public interface Levels {
     
     /**
      * Generic method to be implemented in handlers.

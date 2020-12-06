@@ -19,7 +19,7 @@ public class Ball {
     private Bricks bricks;
     private Paddle paddle;
     
-    private List<LevelListener> lossListeners = new ArrayList<LevelListener>();
+    private List<Levels> lossListeners = new ArrayList<Levels>();
     
     /**
      * Creates a new ball handler object.
@@ -63,7 +63,7 @@ public class Ball {
      *
      * @param newListener A LevelListener object to attach.
      */
-    public void addLossListener(LevelListener newListener) {
+    public void addLossListener(Levels newListener) {
         this.lossListeners.add(newListener);
     }
     
@@ -92,7 +92,7 @@ public class Ball {
         // If the ball hits the bottom of the screen, the player loses a life
         // Notify any attached loss listeners
         if(atBottomBorder) {
-            for(LevelListener ls : this.lossListeners) {
+            for(Levels ls : this.lossListeners) {
                 ls.handleLevelingEvent();
             }
         }
