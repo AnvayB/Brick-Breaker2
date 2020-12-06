@@ -50,14 +50,14 @@ public class Main extends Application {
 				Parent root = null;
 
 				try {
-					root = FXMLLoader.load(getClass().getResource("/breakout.fxml"));
+					root = FXMLLoader.load(getClass().getResource("/brickbreaker.fxml"));
 				} catch (java.io.IOException e) {
 					System.out.println(e);
 					System.exit(1);
 				}
 
 				Scene scene = new Scene(root, 640, 600);
-				Engine game = new Breakout(primaryStage, scene);
+				Game game = new BrickBreaker(primaryStage, scene);
 				primaryStage.setTitle(game.getTitle());
 				primaryStage.setResizable(false);
 
