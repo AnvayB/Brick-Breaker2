@@ -73,9 +73,7 @@ public class Main extends Application {
 
 		rankings = new Button("Leaderboard");
 		rankings.relocate(340, 550);
-		
-		
-		
+
 		rankings.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -84,7 +82,8 @@ public class Main extends Application {
 
 				try {
 					root = FXMLLoader.load(getClass().getResource("/table.fxml"));
-				} catch (java.io.IOException e) {}
+				} catch (java.io.IOException e) {
+				}
 
 				Scene scene = new Scene(root, 600, 400);
 				Game game = new BrickBreaker(primaryStage, scene);
@@ -92,31 +91,41 @@ public class Main extends Application {
 				primaryStage.setResizable(false);
 
 				primaryStage.show();
-				
+
 			}
 
-        });
+		});
 
-	tutorial=new Button("Tutorial");tutorial.relocate(355,500);
+		tutorial = new Button("Tutorial");
+		tutorial.relocate(355, 500);
 
-	tutorial.setOnAction(e -> {Tutorial.display("Tutorial","Welcome to Brick-Breaker!"+
-			"\n"+"\nHere’s how to play the game:"+
-			"\n"+"\nYour goal is to knock out all the bricks on the screen by moving the paddle. "+
-			"\n\nLaunch the ball by pressing the SPACE bar."+
-			"\nControl the paddle using the LEFT and RIGHT arrow keys on your keyboard."+"\n"+
-			"\nDon't let the ball hit the bottom of the screen, otherwise you lose a life."+
-			"\nYou have 5 lives."+
-			"\n\nHave fun!! :)");
+		tutorial.setOnAction(e -> {
+			Tutorial.display("Tutorial",
+					"Welcome to Brick-Breaker!" + "\n" + "\nHere’s how to play the game:" + "\n"
+							+ "\nYour goal is to knock out all the bricks on the screen by moving the paddle. "
+							+ "\n\nLaunch the ball by pressing the SPACE bar."
+							+ "\nControl the paddle using the LEFT and RIGHT arrow keys on your keyboard." + "\n"
+							+ "\nDon't let the ball hit the bottom of the screen, otherwise you lose a life."
+							+ "\nYou have 5 lives."
+							+ "\n\nIf you lose, press ESC to quit and restart the game "
+							+ "\nto enter your score in the Leaderboard"
+							+"\n\nHave fun!! :)");
 
-	});
+		});
 
-	closeButton=new Button("Close game");closeButton.setOnAction(e->window.close());closeButton.relocate(343,600);
+		closeButton = new Button("Close game");
+		closeButton.setOnAction(e -> window.close());
+		closeButton.relocate(343, 600);
 
-	Image img = new Image("file:back.jpeg");
-	ImageView mv = new ImageView(img);
+		Image img = new Image("file:back.jpeg");
+		ImageView mv = new ImageView(img);
 
-	Pane layout = new Pane();layout.getChildren().addAll(mv,title,play,tutorial,rankings,closeButton);
-	Scene scene = new Scene(layout, 800, 800);window.setScene(scene);window.setResizable(false);window.show();
+		Pane layout = new Pane();
+		layout.getChildren().addAll(mv, title, play, tutorial, rankings, closeButton);
+		Scene scene = new Scene(layout, 800, 800);
+		window.setScene(scene);
+		window.setResizable(false);
+		window.show();
 
 	}
 
