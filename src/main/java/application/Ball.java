@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * This class handles ball animation and calls the appropriate collision check methods.
+ * A Ball class that handles the animation of the ball
  */
 public class Ball {
     
@@ -22,12 +22,12 @@ public class Ball {
     private List<Levels> lossListeners = new ArrayList<Levels>();
     
     /**
-     * Creates a new ball handler object.
+     * A constructor that creates the ball object.
      *
-     * @param ball The Circle object that represents the ball.
-     * @param bricks The Bricks handler.
-     * @param paddle The Paddle handler.
-     * @param speed The initial speed of the ball, in pixels per update.
+     * @param ball the ball 
+     * @param bricks the bricks
+     * @param paddle the paddle.
+     * @param speed the speed of the ball.
      */
     public Ball(Circle ball, Bricks bricks, Paddle paddle, double speed) {
         this.ball = ball;
@@ -37,41 +37,39 @@ public class Ball {
     }
     
     /**
-     * A convenience constructor that has a pre-set speed for new games.
+     * Another constructor that initializes the speed of the ball.
      *
-     * @param ball The Circle object that represents the ball.
-     * @param bricks The Bricks handler.
-     * @param paddle The Paddle handler.
+     * @param ball the ball
+     * @param bricks the bricks.
+     * @param paddle the paddle.
      */
     public Ball(Circle ball, Bricks bricks, Paddle paddle) {
         this(ball, bricks, paddle, 4);
     }
     
     /**
-     * Sets the starting speed of the ball.
+     * Sets the starting speed of the ball object
      *
-     * @param speed The initial speed of the ball, in pixels per update.
+     * @param speed the speed of the ball object
      */
     public void setStartingSpeed(double speed) {
-        // Randomize initial starting angle
         this.dx = (new Random()).nextBoolean() ? speed : -speed;
         this.dy = -speed;
     }
     
     /**
-     * Adds a listener object that is called by animate() when the player loses.
+     * Keeps track of when the player loses
      *
-     * @param newListener A LevelListener object to attach.
+     * @param newListener tracker for when the player loses
      */
     public void addLossListener(Levels newListener) {
         this.lossListeners.add(newListener);
     }
     
     /**
-     * Animates the ball and handles collision detection.
+     * Animates the ball when it comes in contact with a brick.
      */
     public void animate() {
-        // Move the ball
         this.ball.setTranslateX(this.ball.getTranslateX() + dx);
         this.ball.setTranslateY(this.ball.getTranslateY() + dy);
         
@@ -85,12 +83,9 @@ public class Ball {
         final int atBrick = this.bricks.checkCollision(this.ball);
         final int atPaddle = this.paddle.checkCollision(this.ball);
         
-        // Calculate angle of reflection (bounce the ball off things)
         if(atLeftBorder || atRightBorder || atBrick == -1) dx *= -1;
         if(atTopBorder || atBrick == 1 || atPaddle == 1) dy *= -1;
         
-        // If the ball hits the bottom of the screen, the player loses a life
-        // Notify any attached loss listeners
         if(atBottomBorder) {
             for(Levels ls : this.lossListeners) {
                 ls.handleLevelingEvent();
@@ -99,45 +94,45 @@ public class Ball {
     }
     
     /**
-     * Convenience method to access the internal node's getTranslateX() method.
+     * Gets the ball's x coordinate
      *
-     * @return The Circle's translateX property.
+     * @return the ball's x coordinate
      */
     public double getTranslateX() { 
         return this.ball.getTranslateX(); 
     }
 
     /**
-     * Convenience method to access the internal node's getTranslateY() method.
+     * Gets the ball's y coordinate
      *
-     * @return The Circle's translateY property.
+     * @return the ball's y coordinate
      */    
     public double getTranslateY() { 
         return this.ball.getTranslateY(); 
     }
  
      /**
-     * Convenience method to access the internal node's setTranslateX() method.
+     * Sets the ball's x coordinate
      *
-     * @param x The x-axis value to set.
+     * @param x the ball's x coordinate
      */   
     public void setTranslateX(double x) { 
         this.ball.setTranslateX(x); 
     }
     
     /**
-     * Convenience method to access the internal node's setTranslateY() method.
+     * Sets the ball's y coordinate
      *
-     * @param y The y-axis value to set.
+     * @param y the ball's y coordinate
      */     
     public void setTranslateY(double y) { 
         this.ball.setTranslateY(y); 
     }
     
     /**
-     * Returns the internal node held by this handler.
+     * Gets the Circle object of the ball
      *
-     * @return The held Circle object.
+     * @return the Circle object of the ball.
      */
     public Circle getNode() {
         return this.ball;

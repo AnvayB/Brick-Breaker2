@@ -13,6 +13,9 @@ import java.util.ResourceBundle;
 import javafx.scene.control.TextField;
 import javafx.event.ActionEvent;
 
+/**
+ * A Controller class that manages the table for the leader board
+ */
 public class Controller implements Initializable {
 
 	@FXML
@@ -25,6 +28,9 @@ public class Controller implements Initializable {
 	@FXML
 	TableColumn<Player, Integer> colLevel;
 
+	/**
+	 * An overridden method from the Initializable class that creates the table
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		colName.setCellValueFactory(new PropertyValueFactory<>("PlayerName"));
@@ -47,11 +53,19 @@ public class Controller implements Initializable {
 	@FXML
 	TextField textfieldLevel;
 
+	/**
+	 * Adds information to table
+	 * @param event the action that occurs
+	 */
 	public void buttonAdd(ActionEvent event) {
 		Player player = new Player(textfieldName.getText(), textfieldDate.getText(), Integer.parseInt(textfieldLevel.getText()));
 		tableview.getItems().add(player);
 	}
 
+	/**
+	 * Deletes information from table
+	 * @param event the action that occurs
+	 */
 	public void buttonDelete(ActionEvent event) {
 		ObservableList<Player> allProduct, SinglePlayer;
 		allProduct = tableview.getItems();

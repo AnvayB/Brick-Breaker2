@@ -18,12 +18,18 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/*
+ * A Main class used to run the JavaFX application
+ */
 public class Main extends Application {
 
 	Stage window;
 	Button play, tutorial, rankings, closeButton;
 	Label title;
 
+	/**
+	 * An overridden method from Application class that starts the stage
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		window = primaryStage;
@@ -114,11 +120,17 @@ public class Main extends Application {
 
 	}
 
+	/**
+	 * An overridden method that stops the application
+	 */
 	@Override
 	public void stop() throws Exception {
 		System.exit(0);
 	}
 
+	/**
+	 * Main method to run the application
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

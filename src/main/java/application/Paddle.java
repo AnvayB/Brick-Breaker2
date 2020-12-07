@@ -7,35 +7,30 @@ import javafx.scene.layout.Pane;
 import javafx.geometry.Bounds;
 
 /**
- * This class handles paddle animation and provides a method to check collision against a given ball.
+ * A Paddle class that handles the animation of the paddle object
  */
 public class Paddle {
     
     private Rectangle paddle;
     
     /**
-     * Creates a new Paddle object.
-     *
-     * @param paddle The Rectangle object representing the paddle.
+     * A constructor that creates the paddle object
+     * @param paddle the paddle object
      */
     public Paddle(Rectangle paddle) {
         this.paddle = paddle;
     }
     
     /**
-     * Animates the paddle at the given speed.
-     * The paddle will not move outside of its parent's bounds.
-     *
-     * @param dx The speed in pixels per update at which to move the paddle horizontally.
-     * @return True if the paddle was animated, false if it wasn't.
+     * Moves the paddle from left to right
+     * @param dx the x position
+     * @return true if paddle moved & vice versa
      */
     public boolean animate(double dx) {
         Bounds bounds = this.paddle.getBoundsInParent();
         final boolean atLeftBorder = bounds.getMinX() + dx <= 0;
         final boolean atRightBorder = bounds.getMaxX() + dx >= ((Pane)this.paddle.getParent()).getWidth();
         
-        // Don't allow paddle to be moved outside of the game canvas
-        // Return true if the paddle was moved
         if (!atLeftBorder && !atRightBorder) {
             this.paddle.setTranslateX(this.paddle.getTranslateX() + dx);
             return true;
@@ -46,10 +41,9 @@ public class Paddle {
     }
     
     /** 
-     * Checks if there is a collision between the paddle and the given ball.
-     *
-     * @param ball The Circle object representing the ball.
-     * @return 1 if there is a collision, 0 if there isn't.
+     * Checks if there is a collision between the paddle and ball
+     * @param ball the ball object
+     * @return 1 for collision &  0 for vice versa
      */
     public int checkCollision(Circle ball) {
         Bounds ballBounds = ball.getBoundsInParent();
@@ -58,7 +52,6 @@ public class Paddle {
         final double insideY = ballBounds.getMaxY() - paddleBounds.getMinY();
         
         if(ballBounds.intersects(paddleBounds)) {
-            // Quick & dirty hack to fix deep collisions
             if(insideY > 3) {
                 ball.setTranslateY(-(insideY - 3));
             }
@@ -70,27 +63,24 @@ public class Paddle {
     }   
     
     /**
-     * Convenience method to access the internal node's getTranslateX() method.
-     *
-     * @return The Rectangle's translateX property.
+     * Gets the paddle's x coordinate
+     * @return the paddle's x coordinate
      */
     public double getTranslateX() { 
         return this.paddle.getTranslateX(); 
     }
     
     /**
-     * Convenience method to access the internal node's setTranslateX() method.
-     *
-     * @param x The x-axis value to set.
+     * Sets the paddle's x coordinate
+     * @param x the paddle's x coordinate
      */   
     public void setTranslateX(double x) { 
         this.paddle.setTranslateX(x); 
     }
     
     /**
-     * Returns the internal node held by this handler.
-     *
-     * @return The held Rectangle object.
+     * Gets the Rectangle object of the paddle
+     * @return the Rectangle object of the paddle
      */
     public Rectangle getNode() {
         return this.paddle;

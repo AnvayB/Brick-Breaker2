@@ -11,7 +11,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.Region;
 
 /**
- * This class handles brick collision with a given ball, as well as damage values for the bricks.
+ * A Bricks class that handles the brick objects
  */
 public class Bricks {
     
@@ -24,9 +24,8 @@ public class Bricks {
     private List<Levels> winListeners = new ArrayList<Levels>();
 
     /**
-     * Creates a Bricks handler object.
-     *
-     * @param bricks The GridPane object that holds the aforementioned bricks.
+     * Constructor of the Bricks class that initializes the brick objects
+     * @param bricks the bricks
      */
     public Bricks(GridPane bricks) {
         this.bricks = bricks;
@@ -35,19 +34,17 @@ public class Bricks {
     }
     
     /**
-     * Adds a listener object that is called by increaseDamange() when the player clears all bricks.
-     *
-     * @param newListener A LevelListener object to attach.
+     * Keeps track of when all the bricks are cleared
+     * @param newListener tracker when all the bricks are cleared
      */
     public void addWinListener(Levels newListener) {
         this.winListeners.add(newListener);
     }
     
     /**
-     * Checks for a collision between the given ball and any brick in our GridPane.
-     *
-     * @param ball The ball to check for collisions against.
-     * @return 1 for a horizontal hit, -1 for a vertical hit, and 0 for no hit.
+     * Checks for a collision between the ball and brick
+     * @param ball the ball object
+     * @return 1 for a horizontal hit, -1 for a vertical hit, and 0 for no hit
      */
     public int checkCollision(Circle ball) {
         Bounds ballBounds = ball.getBoundsInParent();
@@ -59,17 +56,13 @@ public class Bricks {
         final boolean atBricksTop = ballMinY >= this.bricks.getLayoutY() - ball.getRadius() * 2;
         final boolean atBricksBottom = ballMaxY <= (this.bricks.getLayoutY() + this.bricks.getHeight()) + ball.getRadius() * 2;
         
-        // Only check for collisions if the ball is near the brick field
         if (atBricksTop && atBricksBottom) {
-            // Check in reverse from bottom to top for speed
             for(int i = this.brickList.size() - 1; i >= 0; i--) {
                 Region brick = (Region)this.brickList.get(i);
-                // Skip already broken bricks
                 if(!brick.isVisible()) {
                     continue;
                 }
                 
-                // Precalculate bounds
                 Bounds brickBounds = brick.getBoundsInParent();
                 final double brickMinX = this.bricks.getLayoutX() + brickBounds.getMinX();
                 final double brickMinY = this.bricks.getLayoutY() + brickBounds.getMinY();
@@ -79,7 +72,6 @@ public class Bricks {
                 final boolean insideX = ballMaxX >= brickMinX && ballMinX <= brickMaxX;
                 final boolean insideY = ballMaxY >= brickMinY && ballMinY <= brickMaxY;
                 
-                // Verify that the ball is touching/colliding with the current brick
                 if(insideX && insideY) {
                     final boolean atTop = ballMinY < brickMinY;
                     final boolean atBottom = ballMaxY > brickMaxY;
@@ -102,42 +94,35 @@ public class Bricks {
     }
     
     /** 
-     * Increments the damage level of the given brick.
-     *
-     * @param brick The Region object representing the brick.
+     * Increments the damage level of the bricks
+     * @param brick the bricks.
      */
     public void increaseDamage(Region brick) {
         List<String> styles = brick.getStyleClass();
-        // Get row & col from style classes
         int row = Integer.valueOf(styles.get(0).substring(4));
         int col = Integer.valueOf(styles.get(1).substring(4));
         
         this.damage[row][col]++;
-        // Damage of 3 indicates a broken brick
         if(this.damage[row][col] == 3) {
             brick.setVisible(false);
             this.bricksCleared++;
             
             if(isCleared()) {
-                // Notify any attached listeners of a win
                 for(Levels ls : winListeners) {
                     ls.handleLevelingEvent();
                 }
             }
         }
         
-        // Remove all damage styles and add the new one
         styles.removeAll(this.damageStyles);
         styles.add("damage-" + this.damage[row][col]);
         
-        // Debug
         System.out.println(Arrays.toString(styles.toArray()));
     }
     
     /**
-     * Checks to see if all bricks have been broken.
-     *
-     * @return True if the brick field is clear, false if it isn't.
+     * Checks to see if all bricks are cleared
+     * @return true for cleared bricks & vice versa
      */
     public boolean isCleared() {
         System.out.println(bricksCleared + " bricks cleared");
@@ -145,7 +130,7 @@ public class Bricks {
     }
     
     /**
-     * Resets the brick field and removes all damage.
+     * Resets the brick objects
      */
     public void reset() {
         for(Node brick : this.brickList) {

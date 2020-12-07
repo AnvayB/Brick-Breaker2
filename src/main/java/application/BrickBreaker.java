@@ -13,8 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 /**
- * This class is the controller for the game. All 
- * game-specific functions are in here.
+ * A BrickBreaker class that serves as the main class of the game
 */
 public class BrickBreaker extends Game {
     
@@ -35,15 +34,14 @@ public class BrickBreaker extends Game {
     
     
     /**
-     * Creates a new Breakout game.
+     * Creates a new game for BrickBreaker.
      * 
-     * @param stage The primary Stage of the JavaFX application.
-     * @param rootNode The root node of the FXML document.
+     * @param stage the stage.
+     * @param rootNode the root node.
      */
     public BrickBreaker(Stage stage, Scene scene) {
         super(stage, scene, "Brick-Breaker", 60);
         
-        // Lookup game nodes
         this.groups = new Group[5];
         this.groups[0] = (Group)scene.lookup("#titleGroup");
         this.groups[1] = (Group)scene.lookup("#gameGroup");
@@ -60,23 +58,20 @@ public class BrickBreaker extends Game {
         this.paddle = new Paddle((Rectangle)scene.lookup("#paddle"));
         this.ball = new Ball((Circle)scene.lookup("#ball"), this.bricks, this.paddle);
         
-        // Add win/loss listeners
         this.bricks.addWinListener(this::levelUp);
         this.ball.addLossListener(this::loseLife);
         
-        // Handle non-constant controls
         scene.addEventHandler(KeyEvent.KEY_PRESSED, this::toggleGameState);
         
     }
 
+    // An overridden method from the Game class that updates the controls 
     @Override
     public void update(Game game) {
         if(this.gameStarted) {
-            // Animate paddle
             Boolean moved;
             if(game.getKeyPressed() == KeyCode.LEFT) {
                 moved = this.paddle.animate(-paddleSpeed);
-                // Move ball in sync with paddle if it hasn't been launched yet
                 if(!this.ballLaunched && moved) this.ball.setTranslateX(this.ball.getTranslateX() - paddleSpeed);
             }
             if(game.getKeyPressed() == KeyCode.RIGHT) {
@@ -84,7 +79,6 @@ public class BrickBreaker extends Game {
                 if(!this.ballLaunched && moved) this.ball.setTranslateX(this.ball.getTranslateX() + paddleSpeed);
             }
             
-            // Animate ball if it's been launched
             if(this.ballLaunched) {
                 this.ball.animate();
             }
@@ -92,49 +86,45 @@ public class BrickBreaker extends Game {
     }
     
     /** 
-     * Sets the player's number of lives remaining.
+     * Sets the player's lives
      *
-     * @param num The new number of lives remaining.
+     * @param num the players lives
      */
     private void setLives(int num) {
         this.livesRemaining = num;
-        // Update info bar & interstitial screen
         this.livesInd.setText("" + this.livesRemaining);
         this.livesIndIn.setText("x " + this.livesRemaining);
     }
     
     /** 
-     * Sets the player's current level in the game.
+     * Sets the player's level
      *
-     * @param The new level.
+     * @param The level.
      */
     private void setLevel(int num) {
         this.level = num;
-        // Update info bar & interstitial screen
         this.levelInd.setText("Level " + this.level);
         this.levelIndIn.setText("Level " + this.level);
     }
     
     /**
-     * Switches the visible group. There are five to choose from: 
-     * title screen, game canvas, level interstitial, victory screen, and game over screen.
+     * Switches to the right screen.
      *
-     * @param newGroup The group to make visible.
+     * @param newGroup the right screen.
      */
     private void switchToGroup(int newGroup) {
         if(newGroup < this.groups.length && newGroup >= 0 && !isGroupVisible(newGroup)) {
             for(int i = 0; i < this.groups.length; i++) {
-                // When looping over groups, only make the new group visible
                 this.groups[i].setVisible(i == newGroup);
             }
         }
     }
     
     /**
-     * Checks if a given group is visible.
+     * Checks if the screen is visible
      *
-     * @param i The group to check.
-     * @return True if the group exists, false if it doesn't.
+     * @param i the screen.
+     * @return true if screen is visible & vice versa
      */
     private boolean isGroupVisible(int i) {
         if(i < this.groups.length && i >= 0) {
@@ -146,17 +136,14 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Shows a given group for 2 seconds before switching to 
-     * the second group. Useful for interstitial screens, hence
-     * the name.
+     * Shows two screen before switching to another one
      * 
-     * @param first The first group to show.
-     * @param second The second group to show.
+     * @param first the first screen
+     * @param second the second screen.
      */
     private void showInterstitial(int first, int second) {
         switchToGroup(first);
         
-        // Sleep in async task to play nice with JavaFX's threading model
         Task<Void> sleeper = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -172,12 +159,11 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Resets the state of the player objects (paddle and ball.)
+     * Resets the state of the ball and paddle
      *
-     * @param startingSpeed The starting speed of the ball.
+     * @param startingSpeed the starting speed of the ball object
      */
     private void resetPlayer(double startingSpeed) {
-        // Stop the ball's animation
         this.ballLaunched = false;
         
         this.paddle.setTranslateX(0);
@@ -187,9 +173,9 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Resets the entire level, including brick state.
+     * Resets the level
      *
-     * @param startingSpeed The starting speed of the ball.
+     * @param startingSpeed the starting speed of the ball object
      */    
     private void resetLevel(double startingSpeed) {
         this.bricks.reset();
@@ -197,37 +183,29 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Starts a new game.
+     * Starts a new game
      */
     private void startGame() {
-        // Show level interstitial first
         showInterstitial(2, 1);
         
-        //start game
         this.gameStarted = true;
     }
     
     /**
-     * Stops a running game, or exits the program if one is not running.
+     * Checks if the game is running.
      */
     private void stopGame() {
-        // Stop game if one is in progress
         if(this.gameStarted) {
             this.gameStarted = false;
             
-            
-            // Only show title screen here if the game was quit manually
-            // levelUp and loseLife show interstitials on their own
             if(isGroupVisible(1)) {
                 switchToGroup(0);
             }
             
-            // Reset game canvas
             resetLevel(this.initialSpeed);
             setLives(this.maxLives);
             setLevel(1);
         }
-        // Quit otherwise
         else {
             stop();
             this.stage.close();
@@ -235,19 +213,17 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Increases the player's level by one.
+     * Increments the player's level
      */
     private void levelUp() {
         if(this.gameStarted) {
             setLevel(this.level + 1);
             
-            // If the last level was won, show the victory screen
             if(this.level == this.levelCount + 1) {
                 showInterstitial(3, 0);
                 stopGame();
             }
             else {
-                // Show the level interstitial
                 showInterstitial(2, 1);
                 resetLevel(this.level + 3);
             }
@@ -258,18 +234,16 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Decrements the player's level by one.
+     * Decrements the player's level
      */
     private void loseLife() {
         if(this.gameStarted) {
             setLives(this.livesRemaining - 1);
 
-            // If player has lives left, show the level interstitial
             if(this.livesRemaining > 0) {
                 showInterstitial(2, 1);
                 resetPlayer(this.level + 3);
             }
-            // Oh no! Show the game over screen
             else {
                 showInterstitial(4, 0);
                 stopGame();
@@ -281,29 +255,24 @@ public class BrickBreaker extends Game {
     }
     
     /**
-     * Handles global key events for starting a game, launching the ball, 
-     * ending a game, ending the program, and cheat codes.
+     * Changes the game state of Brick-Bricker
      *
-     * @param KeyEvent The event from a KeyEvent handler.
+     * @param KeyEvent the event.
      */
     private void toggleGameState(KeyEvent e) {
         KeyCode currentKey = e.getCode();
         
         switch(currentKey) {
             case SPACE:
-                // Start game
-                // Do not allow startGame if the victory screen is shown
                 if(!this.gameStarted && !isGroupVisible(3)) {
                     startGame();
                 }
-                // Launch ball
-                // Do not allow if the level interstitial is shown
+
                 else if(this.gameStarted && !this.ballLaunched && !isGroupVisible(2)) {
                     this.ballLaunched = true;
                 }
                 break;
             case ESCAPE:
-                // Only allow on title screen and game canvas
                 if(isGroupVisible(0) || isGroupVisible(1)) {
                     stopGame();
                 }

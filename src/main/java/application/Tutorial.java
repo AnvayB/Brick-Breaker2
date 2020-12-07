@@ -16,7 +16,6 @@ import java.util.*;
 
 /**
  * A Tutorial class that manages the tutorial page
- *
  */
 public class Tutorial {
 
@@ -40,11 +39,6 @@ public class Tutorial {
 
 		Button closeButton = new Button("Back to Main Menu");
 		closeButton.setOnAction(e -> window.close());
-
-//		Image image = new Image("file:tutorialback.jpeg");
-//		ImageView imageView = new ImageView(image);
-//		window.setGraphic(imageView);
-//		window.showAndWait();
 
 		BackgroundFill background_fill = new BackgroundFill(Color.LIGHTSEAGREEN, CornerRadii.EMPTY, Insets.EMPTY);
 		Background background = new Background(background_fill);
