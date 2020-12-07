@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.*;
 import javafx.geometry.*;
 import javafx.scene.text.*;
-import java.util.*;
+
 
 /**
  * A Tutorial class that manages the tutorial page
