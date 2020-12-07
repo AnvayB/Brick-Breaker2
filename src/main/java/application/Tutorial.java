@@ -30,7 +30,7 @@ public class Tutorial {
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
 		window.setWidth(610);
-		window.setHeight(450);
+		window.setHeight(590);
 
 		Label label = new Label();
 		label.setText(message);
